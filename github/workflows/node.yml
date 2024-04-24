@@ -1,0 +1,26 @@
+# Name is the name of our project where the code will be pushed
+name : NASA PROJECT CI 
+
+# On refers to the when the code will ne triggered
+on: 
+    push:
+        branches: [ main ]
+    pull_request: 
+        branches: [ main ]
+# jobs defines the actions we're doing in our project
+jobs: 
+    build:
+        # run-on refers to where our github code will run
+        runs-on: windows-latest 
+        # actions that will be taken when build job is triggered
+        steps:
+            # uses check in our latest code from github repo
+            - uses: actions/checkout@v2
+            - name: Tells the compiler to use Node.js version 16
+              uses: actions/setup-node@v2
+              with:
+                node-version: '20'
+            # install it installs the packages that are needed
+            - run: npm install
+            # the command below it build our frontend code and makes it ready for deployment and production
+            - run: npm run build --prefix client
